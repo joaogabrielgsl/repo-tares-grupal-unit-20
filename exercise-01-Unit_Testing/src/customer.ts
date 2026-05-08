@@ -2,18 +2,41 @@
  * Represents a customer with specific tax and discount rules.
  */
 
- import { AbstractCustomer } from "./abstract.customer.js";
+import { AbstractCustomer } from "./abstract.customer.js";
 
- export class Customer extends AbstractCustomer{
-   private name: string;
-    //// 
-    //// 
-    //// FILL HERE THE CODE OF Customer 
-    //// 
-    //// 
+type CustomerType = 'regular' | 'vip' | 'business';
 
-    public getName(): string {
-      return this.name;
-    }
- }
- 
+const DISCOUNT_RATES: Record<CustomerType, number> = {
+  regular: 0.15,
+  vip: 0.5,
+  business: 0,
+};
+
+const TAX_RATES: Record<CustomerType, number> = {
+  regular: 0.21,
+  vip: 0.21,
+  business: 0.1,
+};
+
+export class Customer extends AbstractCustomer {
+  private readonly name: string;
+  private readonly type: CustomerType;
+
+  constructor(name: string, type: CustomerType) {
+    super(name, type);
+    this.name = name;
+    this.type = type;
+  }
+
+  public getDiscountRate(): number {
+    return DISCOUNT_RATES[this.type];
+  }
+
+  public getTaxRate(): number {
+    return TAX_RATES[this.type];
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+}
