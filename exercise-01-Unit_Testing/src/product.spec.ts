@@ -1,5 +1,5 @@
 /**
- *  Unit test for class Product
+ * Unit test for class Product
  */
 
 import { Product } from "./product.js";
@@ -15,13 +15,21 @@ describe('Test of class Product', () => {
         });
 
         test('it fails when product name is longer than 30 chars', () => {
-            // Empty test,, to be writter
-            expect(true).toBe(false);
+            // Arrange
+            const longName = "This is a very long name that exceeds thirty characters";
+            // FIXED: Matches the class exactly
+            const expectedError = new Error('Product name cannot be longer than 30 characters');
+            
+            // Act + Assert
+            expect(() => new Product('P01', longName, 10)).toThrow(expectedError);
         });
 
         test('it fails when product price is negative', () => {
-            // Empty test,, to be writter
-            expect(true).toBe(false);
+            // Arrange
+            const expectedError = new Error('Product price cannot be negative');
+            
+            // Act + Assert
+            expect(() => new Product('P01', 'Valid Name', -5.00)).toThrow(expectedError);
         });
 
         test('it istantiates the product successfully', () => {
@@ -44,4 +52,3 @@ describe('Test of class Product', () => {
         });
     });
 });
-

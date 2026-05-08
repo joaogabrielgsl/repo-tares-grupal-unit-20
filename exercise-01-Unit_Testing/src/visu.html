@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Manager UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white shadow-2xl rounded-2xl w-full max-w-md overflow-hidden">
+        <div class="bg-indigo-600 p-6 text-white text-center">
+            <h1 class="text-2xl font-bold">Receipt Generator</h1>
+            <p class="text-indigo-100 text-sm">Unit Testing Exercise 01</p>
+        </div>
+
+        <div class="p-6 space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Customer Name</label>
+                <input type="text" id="custName" value="Diego Soto" 
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Customer Type</label>
+                <select id="custType" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="regular">Regular (15% Disc / 21% Tax)</option>
+                    <option value="vip">VIP (50% Disc / 21% Tax)</option>
+                    <option value="business">Business (0% Disc / 10% Tax)</option>
+                </select>
+            </div>
+
+            <button onclick="updateReceipt()" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                Generate Receipt
+            </button>
+        </div>
+
+        <div id="receiptOutput" class="mx-6 mb-6 p-4 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl hidden">
+            <div class="text-center mb-4">
+                <h2 id="outName" class="font-bold text-lg uppercase"></h2>
+                <p id="outType" class="text-xs text-gray-500"></p>
+            </div>
+            
+            <div class="space-y-1 text-sm">
+                <div class="flex justify-between"><span>Subtotal:</span><span id="resSub"></span></div>
+                <div class="flex justify-between text-red-600"><span>Discount:</span><span id="resDisc"></span></div>
+                <div class="flex justify-between"><span>Tax (VAT):</span><span id="resTax"></span></div>
+                <hr class="my-2">
+                <div class="flex justify-between font-bold text-lg text-indigo-600">
+                    <span>Total:</span><span id="resTotal"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateReceipt() {
+            // Inputs
+            const name = document.getElementById('custName').value;
+            const type = document.getElementById('custType').value;
+            const subtotal = 174.50; // Hardcoded example from your cart
+
+            // Logic (Mirroring your Customer class)
+            let discountRate = 0;
+            let taxRate = 0.21;
+
+            if (type === 'regular') discountRate = 0.15;
+            else if (type === 'vip') discountRate = 0.50;
+            else if (type === 'business') {
+                discountRate = 0;
+                taxRate = 0.10;
+            }
+
+            const discount = subtotal * discountRate;
+            const tax = (subtotal - discount) * taxRate;
+            const total = (subtotal - discount) + tax;
+
+            // Update UI
+            document.getElementById('outName').innerText = name;
+            document.getElementById('outType').innerText = `Status: ${type.toUpperCase()}`;
+            document.getElementById('resSub').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('resDisc').innerText = `-$${discount.toFixed(2)}`;
+            document.getElementById('resTax').innerText = `$${tax.toFixed(2)}`;
+            document.getElementById('resTotal').innerText = `$${total.toFixed(2)}`;
+            
+            document.getElementById('receiptOutput').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
