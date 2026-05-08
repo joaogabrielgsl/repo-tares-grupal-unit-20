@@ -1,3 +1,4 @@
+
 /**
  * Handles the calculation and formatting of the shopping receipt.
  */
@@ -8,11 +9,10 @@ export class Product {
             throw new Error('Product id cannot be longer than 6 characters');
         }
         if(name.length > 30) {
-            // FIXED: Matches the test exactly
-            throw new Error('Product name cannot be longer than 30 characters');
+            throw new Error('Product names cannot have more than 30 characters');
         }
         if(price < 0)  {
-            throw new Error('Product price cannot be negative');
+            throw new Error('Product prices cannot be negative');
         }
     }
 
