@@ -51,4 +51,4 @@ npm run test
 ## Group Members
 - Hugo Hernández Moreno
 - Marian Alexandru Domsa Grigoras
-- João Gabriel Guimaraes Santa Lima
+- João Gabriel G. S. Lima
